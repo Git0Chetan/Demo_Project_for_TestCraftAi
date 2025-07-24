@@ -1,42 +1,44 @@
-# Basic calculator in Python
+# source_code.py
+def add_numbers(a, b):
+    """Add two numbers and return the result."""
+    if not isinstance(a, (int, float)) or not isinstance(b, (int, float)):
+        raise TypeError("Both arguments must be numbers")
+    return a + b
 
-# Function to perform addition
-def add(x, y):
-    return x + y
+def subtract_numbers(a, b):
+    """Subtract two numbers and return the result."""
+    if not isinstance(a, (int, float)) or not isinstance(b, (int, float)):
+        raise TypeError("Both arguments must be numbers")
+    return a - b
 
-# Function to perform subtraction
-def subtract(x, y):
-    return x - y
+def divide_numbers(a, b):
+    """Divide two numbers and return the result."""
+    if b == 0:
+        raise ValueError("Cannot divide by zero")
+    return a / b
 
-# Function to perform multiplication
-def multiply(x, y):
-    return x * y
+def is_even(number):
+    """Check if a number is even."""
+    if not isinstance(number, int):
+        raise TypeError("Input must be an integer")
+    return number % 2 == 0
 
-# Function to perform division
-def divide(x, y):
-    if y == 0:
-        return "Error! Cannot divide by zero."
-    return x / y
-
-# Main program
-print("Simple Calculator")
-
-# Get user input
-num1 = float(input("Enter first number: "))
-operator = input("Enter operator (+, -, *, /): ")
-num2 = float(input("Enter second number: "))
-
-# Perform operation based on input
-if operator == '+':
-    result = add(num1, num2)
-elif operator == '-':
-    result = subtract(num1, num2)
-elif operator == '*':
-    result = multiply(num1, num2)
-elif operator == '/':
-    result = divide(num1, num2)
-else:
-    result = "Invalid operator!"
-
-# Display the result
-print(f"Result: {result}")
+class Calculator:
+    def __init__(self):
+        self.history = []
+    
+    def calculate(self, operation, a, b):
+        if operation == "add":
+            result = add_numbers(a, b)
+        elif operation == "subtract":
+            result = subtract_numbers(a, b)
+        elif operation == "divide":
+            result = divide_numbers(a, b)
+        else:
+            raise ValueError("Unsupported operation")
+        
+        self.history.append(f"{a} {operation} {b} = {result}")
+        return result
+    
+    def get_history(self):
+        return self.history
