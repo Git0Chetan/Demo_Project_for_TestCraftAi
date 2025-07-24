@@ -6,88 +6,109 @@ from cal import *
 
 
 import pytest
+from source_code import add_numbers, subtract_numbers, divide_numbers, is_even, Calculator
 
-# Source code (provided in the prompt)
-def add(x, y):
-    return x + y
+# Test functions for add_numbers
+def test_add_numbers_valid_inputs():
+    assert add_numbers(2, 3) == 5
+    assert add_numbers(10.5, 2.5) == 13.0
+    assert add_numbers(-5, 5) == 0
+    assert add_numbers(0,0) == 0
 
-def subtract(x, y):
-    return x - y
-
-def multiply(x, y):
-    return x * y
-
-def divide(x, y):
-    if y == 0:
-        return "Error! Cannot divide by zero."
-    return x / y
-
-
-class TestCalculator:
-    @pytest.mark.parametrize("x, y, expected", [
-        (1, 2, 3),
-        (10, 20, 30),
-        (-5, 5, 0),
-        (0, 0, 0),
-        (1.5, 2.5, 4.0)
-
-    ])
-    def test_add(self, x, y, expected):
-        assert add(x, y) == expected
-
-    @pytest.mark.parametrize("x, y, expected", [
-        (2, 1, 1),
-        (10, 5, 5),
-        (5, 10, -5),
-        (0, 0, 0),
-        (1.5, 2.5, -1.0)
-    ])
-    def test_subtract(self, x, y, expected):
-        assert subtract(x, y) == expected
-
-    @pytest.mark.parametrize("x, y, expected", [
-        (2, 3, 6),
-        (5, 5, 25),
-        (0, 5, 0),
-        (-2, 5, -10),
-        (2.5, 2, 5.0)
-    ])
-    def test_multiply(self, x, y, expected):
-        assert multiply(x, y) == expected
-
-    @pytest.mark.parametrize("x, y, expected", [
-        (10, 2, 5.0),
-        (5, 1, 5.0),
-        (10, 0, "Error! Cannot divide by zero."),
-        (5, -2, -2.5),
-        (10.0,2.5, 4.0)
-    ])
-    def test_divide(self, x, y, expected):
-        assert divide(x, y) == expected
+def test_add_numbers_invalid_inputs():
+    with pytest.raises(TypeError):
+        add_numbers("a", 2)
+    with pytest.raises(TypeError):
+        add_numbers(2, "b")
+    with pytest.raises(TypeError):
+        add_numbers("a", "b")
 
 
-    def test_divide_by_zero_string(self):
-        with pytest.raises(TypeError): #this will fail, showing that the function does not raise an exception.  The function returns a string instead.
-            assert divide(5,0) == ZeroDivisionError
+# Test functions for subtract_numbers
+def test_subtract_numbers_valid_inputs():
+    assert subtract_numbers(5, 3) == 2
+    assert subtract_numbers(10.5, 2.5) == 8.0
+    assert subtract_numbers(-5, 5) == -10
+    assert subtract_numbers(0,0) == 0
 
-    def test_invalid_operator(self):
-        num1 = 10
-        num2 = 5
-        operator = "%"
-        with pytest.raises(TypeError): #this will fail if the typeerror is not raised in the function
-            result =  perform_operation(num1, operator, num2)
-            assert result == "Invalid operator!"
+def test_subtract_numbers_invalid_inputs():
+    with pytest.raises(TypeError):
+        subtract_numbers("a", 2)
+    with pytest.raises(TypeError):
+        subtract_numbers(2, "b")
 
-def perform_operation(num1, operator, num2):  #added helper function to reduce repetition in testing
-    if operator == '+':
-        result = add(num1, num2)
-    elif operator == '-':
-        result = subtract(num1, num2)
-    elif operator == '*':
-        result = multiply(num1, num2)
-    elif operator == '/':
-        result = divide(num1, num2)
-    else:
-        result = "Invalid operator!"
-    return result
+
+# Test functions for divide_numbers
+def test_divide_numbers_valid_inputs():
+    assert divide_numbers(10, 2) == 5.0
+    assert divide_numbers(10.5, 2.5) == 4.2
+    assert divide_numbers(-10, 2) == -5.0
+
+def test_divide_numbers_zero_division():
+    with pytest.raises(ValueError):
+        divide_numbers(10, 0)
+    with pytest.raises(ValueError):
+        divide_numbers(0,0)
+
+def test_divide_numbers_invalid_inputs():
+    with pytest.raises(TypeError):
+        divide_numbers("a", 2)
+    with pytest.raises(TypeError):
+        divide_numbers(2, "b")
+
+
+# Test functions for is_even
+def test_is_even_valid_inputs():
+    assert is_even(2) == True
+    assert is_even(0) == True
+    assert is_even(-4) == True
+
+def test_is_even_invalid_inputs():
+    with pytest.raises(TypeError):
+        is_even(2.5)
+    with pytest.raises(TypeError):
+        is_even("a")
+
+
+# Test functions for Calculator class
+def test_calculator_add():
+    calc = Calculator()
+    assert calc.calculate("add", 2, 3) == 5
+    assert calc.get_history() == ['2 add 3 = 5']
+
+def test_calculator_subtract():
+    calc = Calculator()
+    assert calc.calculate("subtract", 5, 3) == 2
+    assert calc.get_history() == ['5 subtract 3 = 2']
+
+def test_calculator_divide():
+    calc = Calculator()
+    assert calc.calculate("divide", 10, 2) == 5.0
+    assert calc.get_history() == ['10 divide 2 = 5.0']
+
+def test_calculator_invalid_operation():
+    calc = Calculator()
+    with pytest.raises(ValueError):
+        calc.calculate("multiply", 2, 3)
+
+def test_calculator_divide_by_zero():
+    calc = Calculator()
+    with pytest.raises(ValueError):
+        calc.calculate("divide", 10, 0)
+
+def test_calculator_invalid_input_types():
+    calc = Calculator()
+    with pytest.raises(TypeError):
+        calc.calculate("add", "a", 2)
+    with pytest.raises(TypeError):
+        calc.calculate("subtract", 2, "b")
+    with pytest.raises(TypeError):
+        calc.calculate("divide", "a", "b")
+
+
+def test_calculator_history():
+    calc = Calculator()
+    calc.calculate("add", 1, 2)
+    calc.calculate("subtract", 4,1)
+    assert calc.get_history() == ['1 add 2 = 3', '4 subtract 1 = 3']
 
