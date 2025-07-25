@@ -8,6 +8,6 @@ def fibonacci(n):
     return sequence
 
 # Example usage:
-num_terms = 10  # Change this to generate more or fewer terms
+num_terms = 10 
 print(f"Fibonacci series with {num_terms} terms:")
 print(fibonacci(num_terms))

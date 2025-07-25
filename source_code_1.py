@@ -1,4 +1,4 @@
-# source_code.py
+
 def add_numbers(a, b):
     """Add two numbers and return the result."""
     if not isinstance(a, (int, float)) or not isinstance(b, (int, float)):
