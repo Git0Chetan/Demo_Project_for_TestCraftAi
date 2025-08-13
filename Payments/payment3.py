@@ -74,12 +74,20 @@ def main():
     customer1 = Customer("CUST001", "Alice Smith", "alice@example.com", basic_plan)
     customer2 = Customer("CUST002", "Bob Johnson", "bob@example.com", pro_plan)
     customer3 = Customer("CUST003", "Charlie Brown", "charlie@example.com", pro_plan)
+    customer4 = Customer("CUST004", "Diana Prince", "diana@example.com", basic_plan)
+    customer5 = Customer("CUST005", "Ethan Hunt", "ethan@example.com", pro_plan)
+    customer6 = Customer("CUST006", "Grace Hopper", "grace@example.com", basic_plan)
+
+
 
     # Initialize billing system
     billing_system = BillingSystem()
     billing_system.add_customer(customer1)
     billing_system.add_customer(customer2)
     billing_system.add_customer(customer3)
+    billing_system.add_customer(customer4)
+    billing_system.add_customer(customer5)
+    billing_system.add_customer(customer6)
 
     # Simulate billing for two months
     billing_dates = [
