@@ -77,6 +77,7 @@ def main():
     customer4 = Customer("CUST004", "Diana Prince", "diana@example.com", basic_plan)
     customer5 = Customer("CUST005", "Ethan Hunt", "ethan@example.com", pro_plan)
     customer6 = Customer("CUST006", "Grace Hopper", "grace@example.com", basic_plan)
+    
 
 
 
