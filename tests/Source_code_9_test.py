@@ -6,68 +6,57 @@ from Source_code_9 import *
 
 
 import pytest
-from your_module import calculate_average, process_data, MyClass  # Replace your_module
+from example import *
 
-def test_calculate_average_empty_list():
-    with pytest.raises(ZeroDivisionError):
-        calculate_average([])
+def test_calculate_average_valid():
+    assert calculate_average([1, 2, 3, 4, 5]) == 3.0
 
-def test_calculate_average_single_element():
-    assert calculate_average([5]) == 5
+def test_calculate_average_empty():
+    assert calculate_average([]) == 0.0
 
-def test_calculate_average_multiple_elements():
-    assert calculate_average([1, 2, 3, 4, 5]) == 3
+def test_calculate_average_negative():
+    assert calculate_average([-1, -2, -3]) == -2.0
 
-def test_calculate_average_negative_numbers():
-    assert calculate_average([-1, 0, 1]) == 0
+def test_calculate_average_mixed():
+    assert calculate_average([1, -2, 3, -4, 5]) == 0.6
 
-def test_calculate_average_mixed_numbers():
-    assert calculate_average([-2, 0, 2, 4]) == 1
-
-
-@pytest.mark.parametrize("input_data, expected_output", [
-    ([1, 2, 3], [2, 3, 4]),
-    ([-1, 0, 1], [0, 1, 2]),
-    ([5], [6]),
-    ([], []),
-])
-def test_process_data(input_data, expected_output):
-    assert process_data(input_data) == expected_output
+def test_calculate_average_zero():
+    assert calculate_average([0,0,0]) == 0.0
 
 
 def test_MyClass_init():
-    obj = MyClass(10)
-    assert obj.value == 10
+    obj = MyClass("test")
+    assert obj.name == "test"
 
-def test_MyClass_init_invalid():
+def test_MyClass_init_empty():
+    obj = MyClass("")
+    assert obj.name == ""
+
+def test_MyClass_init_numeric():
     with pytest.raises(TypeError):
-        MyClass("abc")
+        MyClass(123)
 
-def test_MyClass_method1():
-    obj = MyClass(5)
-    assert obj.method1() == 10
+def test_MyClass_greet_valid():
+    obj = MyClass("test")
+    assert obj.greet() == "Hello, test!"
 
-def test_MyClass_method2():
-    obj = MyClass(5)
-    assert obj.method2(2) == 7
+def test_MyClass_greet_empty():
+    obj = MyClass("")
+    assert obj.greet() == "Hello, !"
 
-@pytest.mark.parametrize("input_value, expected_result", [
-    (5, 10),
-    (0, 0),
-    (-5, 0),
-    (10.5, 21),
-])
-def test_MyClass_method1_param(input_value, expected_result):
-    obj = MyClass(input_value)
-    assert obj.method1() == expected_result
+def test_process_data_valid():
+    assert process_data([1,2,3]) == [2,3,4]
 
-@pytest.mark.parametrize("input_value, input_add, expected_result", [
-    (5, 2, 7),
-    (0, 10, 10),
-    (-5, 5, 0),
-    (10.5, 2, 12.5),
-])
-def test_MyClass_method2_param(input_value, input_add, expected_result):
-    obj = MyClass(input_value)
-    assert obj.method2(input_add) == expected_result
+def test_process_data_empty():
+    assert process_data([]) == []
+
+def test_process_data_negative():
+    assert process_data([-1,-2,-3]) == [0,-1,-2]
+
+def test_process_data_mixed():
+    assert process_data([1,-2,3]) == [2,1,4]
+
+def test_process_data_strings():
+    with pytest.raises(TypeError):
+        process_data(["a","b","c"])
 
